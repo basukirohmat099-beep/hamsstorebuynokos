@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nova AI — Asisten AI Online</title>
+  <meta name="description" content="Nova AI — asisten AI chat berbasis web yang berfungsi penuh tanpa API key." />
+  <link rel="icon" href="ai-avatar.jpg" />
+  <link rel="stylesheet" href="style.css" />
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+  <!-- ================= LOGIN SCREEN ================= -->
+  <div class="login-screen" id="loginScreen">
+    <div class="login-card">
+      <div class="login-brand">
+        <img src="ai-avatar.jpg" alt="Nova AI" class="login-logo" />
+        <h1>Nova AI</h1>
+        <p>Masuk untuk mulai mengobrol dengan asisten AI</p>
+      </div>
+
+      <!-- Step 1: tombol Google -->
+      <div id="stepGoogle">
+        <button class="google-btn" id="googleSignIn">
+          <svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true">
+            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+          </svg>
+          <span>Masuk dengan Google</span>
+        </button>
+        <p class="login-terms">Dengan melanjutkan, Anda menyetujui Ketentuan & Kebijakan Privasi.</p>
+      </div>
+
+      <!-- Step 2: form akun Google -->
+      <div id="stepForm" style="display:none">
+        <div class="google-head">
+          <svg width="22" height="22" viewBox="0 0 48 48" aria-hidden="true">
+            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+          </svg>
+          <span>Login dengan Google</span>
+        </div>
+        <h2 class="google-title">Selamat datang</h2>
+        <p class="google-sub">Masuk untuk melanjutkan ke Nova AI</p>
+
+        <div class="gfield">
+          <input type="text" id="gName" placeholder=" " autocomplete="name" />
+          <label for="gName">Nama lengkap</label>
+        </div>
+        <div class="gfield">
+          <input type="email" id="gEmail" placeholder=" " autocomplete="email" />
+          <label for="gEmail">Email Google</label>
+        </div>
+
+        <div class="grow-row">
+          <button class="gtext-btn" id="backBtn">Kembali</button>
+          <button class="gprimary" id="nextBtn">Berikutnya</button>
+        </div>
+      </div>
+    </div>
+    <div class="login-foot">Dibuat oleh HAMKASYAHPUTRA</div>
+  </div>
+
+  <!-- ================= APP ================= -->
+  <div class="app" id="app" style="display:none">
+    <!-- ============ SIDEBAR ============ -->
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <img src="ai-avatar.jpg" alt="Nova AI" class="logo-img" />
+        <div>
+          <h1>Nova AI</h1>
+          <span>Asisten AI • Online</span>
+        </div>
+      </div>
+
+      <button class="new-chat" id="newChat">＋ Obrolan Baru</button>
+
+      <div class="side-section">
+        <div class="side-label">Pengaturan</div>
+        <div class="field">
+          <label for="model">Mesin AI</label>
+          <select id="model">
+            <option value="auto">Otomatis — multi-server gratis</option>
+          </select>
+          <div class="ai-status" id="aiStatus">Siap • multi-server otomatis</div>
+        </div>
+        <div class="field">
+          <label for="systemPrompt">Gaya / Instruksi Asisten</label>
+          <textarea id="systemPrompt">Kamu adalah Nova, asisten AI yang ramah, cerdas, dan membantu. Jawab dengan jelas, akurat, dan gunakan bahasa yang sama dengan pengguna.</textarea>
+        </div>
+      </div>
+
+      <div class="side-spacer"></div>
+
+      <div class="side-footer">
+        <button class="ghost-btn" id="themeToggle">🌙 <span id="themeLabel">Mode Terang</span></button>
+        <button class="ghost-btn" id="clearAll">🗑️ Hapus Semua Riwayat</button>
+        <div class="account-box">
+          <div class="user-avatar" id="sideAvatar">?</div>
+          <div class="account-info">
+            <b id="sideName">Pengguna</b>
+            <span id="sideEmail">email@google.com</span>
+          </div>
+          <button class="logout-btn" id="logoutBtn" title="Keluar">⏻</button>
+        </div>
+      </div>
+    </aside>
+
+    <div class="overlay" id="overlay"></div>
+
+    <!-- ============ MAIN ============ -->
+    <main class="main">
+      <header class="topbar">
+        <button class="icon-btn menu-btn" id="menuBtn">☰</button>
+        <div>
+          <div class="title">Nova AI</div>
+          <div class="subtitle" id="topSub">Siap membantu Anda</div>
+        </div>
+        <div class="grow"></div>
+        <button class="icon-btn" id="themeToggleTop" title="Ganti tema">🌗</button>
+      </header>
+
+      <div class="chat" id="chat">
+        <div class="chat-inner" id="chatInner">
+          <!-- Welcome screen -->
+          <div class="welcome" id="welcome">
+            <img src="ai-avatar.jpg" alt="Nova AI" class="big-logo" />
+            <h2>Halo, <span id="welcomeName">Sahabat</span>! Saya Nova AI 👋</h2>
+            <p>Asisten AI yang siap menjawab pertanyaan, menulis, coding, dan banyak lagi. Coba salah satu contoh di bawah atau ketik pertanyaan Anda.</p>
+            <div class="suggestions">
+              <div class="suggestion" data-q="Jelaskan apa itu kecerdasan buatan (AI) dengan bahasa sederhana.">
+                <b>💡 Jelaskan konsep</b>
+                <span>Jelaskan apa itu kecerdasan buatan dengan sederhana</span>
+              </div>
+              <div class="suggestion" data-q="Buatkan fungsi Python untuk mengecek apakah sebuah angka adalah bilangan prima.">
+                <b>💻 Bantu coding</b>
+                <span>Buat fungsi Python cek bilangan prima</span>
+              </div>
+              <div class="suggestion" data-q="Tuliskan email profesional untuk melamar pekerjaan sebagai desainer grafis.">
+                <b>✍️ Tulis teks</b>
+                <span>Tulis email lamaran kerja profesional</span>
+              </div>
+              <div class="suggestion" data-q="Berikan 5 ide resep sarapan sehat dan cepat yang mudah dibuat.">
+                <b>🍳 Ide & saran</b>
+                <span>5 ide resep sarapan sehat & cepat</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="composer-wrap">
+        <div class="composer">
+          <textarea id="input" rows="1" placeholder="Tulis pesan Anda… (Enter untuk kirim, Shift+Enter baris baru)"></textarea>
+          <button class="send-btn" id="send" title="Kirim">➤</button>
+        </div>
+      </div>
+
+      <button class="scroll-down" id="scrollDown" title="Ke pesan terbaru">↓<span class="badge-dot"></span></button>
+    </main>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+"use strict";
+
+  // ---------- KONFIGURASI PENYEDIA AI (semua tanpa API key) ----------
+  const LLM7_URL    = "https://api.llm7.io/v1/chat/completions";
+  const LLM7_MODEL  = "mistral-Nemo-Instruct-2407";
+  const OVH_URL     = "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1/chat/completions";
+  const OVH_MODEL   = "Mistral-Nemo-Instruct-2407";
+  const HORDE_ASYNC  = "https://aihorde.net/api/v2/generate/text/async";
+  const HORDE_STATUS = "https://aihorde.net/api/v2/generate/text/status/";
+  const HORDE_KEY    = "0000000000";           // kunci anonim resmi AI Horde
+  const HORDE_AGENT  = "NovaAI:1.0:web";
+  const HORDE_MODELS = ["aphrodite/DeepSeek-V4.1-Flash", "koboldcpp/NVIDIA-Nemotron-3-Nano-4B-Q4_K_M"];
+
+  const STORAGE_KEY  = "nova_ai_history_v1";
+  const SETTINGS_KEY = "nova_ai_settings_v1";
+  const USER_KEY     = "nova_ai_user_v1";
+  const PREF_KEY     = "nova_ai_provider_v1";
+  const AI_AVATAR    = "ai-avatar.jpg";
+
+  // ---------- DOM ----------
+  const $ = (id) => document.getElementById(id);
+  const chat = $("chat");
+  const chatInner = $("chatInner");
+  const welcome = $("welcome");
+  const input = $("input");
+  const sendBtn = $("send");
+  const newChatBtn = $("newChat");
+  const clearAllBtn = $("clearAll");
+  const modelSel = $("model");
+  const aiStatus = $("aiStatus");
+  const sysPrompt = $("systemPrompt");
+  const themeToggle = $("themeToggle");
+  const themeToggleTop = $("themeToggleTop");
+  const themeLabel = $("themeLabel");
+  const topSub = $("topSub");
+  const menuBtn = $("menuBtn");
+  const sidebar = $("sidebar");
+  const overlay = $("overlay");
+  const toastEl = $("toast");
+  const scrollDown = $("scrollDown");
+
+  // Login DOM
+  const loginScreen = $("loginScreen");
+  const stepGoogle = $("stepGoogle");
+  const stepForm = $("stepForm");
+  const googleSignIn = $("googleSignIn");
+  const gName = $("gName");
+  const gEmail = $("gEmail");
+  const nextBtn = $("nextBtn");
+  const backBtn = $("backBtn");
+  const app = $("app");
+  const sideAvatar = $("sideAvatar");
+  const sideName = $("sideName");
+  const sideEmail = $("sideEmail");
+  const logoutBtn = $("logoutBtn");
+  const welcomeName = $("welcomeName");
+
+  // ---------- STATE ----------
+  let messages = [];       // {role, content}
+  let isGenerating = false;
+  let controller = null;
+  let currentUser = null;  // {name, email}
+  let preferredProvider = null;
+  try { preferredProvider = localStorage.getItem(PREF_KEY); } catch (e) {}
+
+  // ---------- UTIL ----------
+  function toast(msg, ms = 3500) {
+    toastEl.textContent = msg;
+    toastEl.classList.add("show");
+    clearTimeout(toastEl._t);
+    toastEl._t = setTimeout(() => toastEl.classList.remove("show"), ms);
+  }
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+  function escapeHtml(str) {
+    return str
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
+  // Inisial dari nama akun Google (mis. "Budi Santoso" -> "BS")
+  function getInitials(name, email) {
+    const n = (name || "").trim();
+    if (n) {
+      const parts = n.split(/\s+/).filter(Boolean);
+      if (parts.length >= 2) return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+      return parts[0].slice(0, 2).toUpperCase();
+    }
+    return (email || "?").trim().slice(0, 2).toUpperCase();
+  }
+
+  // Warna konsisten dari string (untuk latar avatar)
+  function colorFromString(str) {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    const h = Math.abs(hash) % 360;
+    return `linear-gradient(135deg, hsl(${h},70%,52%), hsl(${(h + 40) % 360},72%,44%))`;
+  }
+
+  // ---------- MARKDOWN (lightweight, self-contained) ----------
+  function renderMarkdown(md) {
+    if (!md) return "";
+    const codeBlocks = [];
+    let text = md.replace(/\r\n/g, "\n");
+
+    text = text.replace(/```([\w-]*)\n?([\s\S]*?)```/g, (m, lang, code) => {
+      const idx = codeBlocks.length;
+      codeBlocks.push(
+        `<pre><button class="copy-code" data-copy="${idx}">Copy</button><code class="lang-${escapeHtml(lang)}">${escapeHtml(code.replace(/\n$/, ""))}</code></pre>`
+      );
+      return `\u0000CODE${idx}\u0000`;
+    });
+
+    text = escapeHtml(text);
+
+    text = text.replace(/((?:^\|.*\|\s*$\n?)+)/gm, (block) => {
+      const rows = block.trim().split("\n").map((r) => r.trim());
+      if (rows.length < 2) return block;
+      const isSep = (r) => /^\|?[\s:|-]+\|?$/.test(r) && r.includes("-");
+      let html = "<table>";
+      rows.forEach((row, i) => {
+        if (isSep(row)) return;
+        const cells = row.replace(/^\||\|$/g, "").split("|").map((c) => c.trim());
+        const tag = i === 0 ? "th" : "td";
+        html += "<tr>" + cells.map((c) => `<${tag}>${inline(c)}</${tag}>`).join("") + "</tr>";
+      });
+      html += "</table>";
+      return html;
+    });
+
+    text = text.replace(/^###### (.*)$/gm, "<h3>$1</h3>");
+    text = text.replace(/^##### (.*)$/gm, "<h3>$1</h3>");
+    text = text.replace(/^#### (.*)$/gm, "<h3>$1</h3>");
+    text = text.replace(/^### (.*)$/gm, "<h3>$1</h3>");
+    text = text.replace(/^## (.*)$/gm, "<h2>$1</h2>");
+    text = text.replace(/^# (.*)$/gm, "<h1>$1</h1>");
+
+    text = text.replace(/^\s*([-*_])\1{2,}\s*$/gm, "<hr>");
+    text = text.replace(/^&gt; (.*)$/gm, "<blockquote>$1</blockquote>");
+
+    text = text.replace(/(?:^|\n)((?:\s*[-*+] .*(?:\n|$))+)/g, (m, block) => {
+      const items = block.trim().split("\n").map((l) => `<li>${inline(l.replace(/^\s*[-*+] /, ""))}</li>`).join("");
+      return `\n<ul>${items}</ul>`;
+    });
+    text = text.replace(/(?:^|\n)((?:\s*\d+\. .*(?:\n|$))+)/g, (m, block) => {
+      const items = block.trim().split("\n").map((l) => `<li>${inline(l.replace(/^\s*\d+\. /, ""))}</li>`).join("");
+      return `\n<ol>${items}</ol>`;
+    });
+
+    const lines = text.split("\n");
+    let out = "";
+    let para = [];
+    const flush = () => { if (para.length) { out += `<p>${para.join("<br>")}</p>`; para = []; } };
+    lines.forEach((line) => {
+      const isBlock = /^\s*<(h1|h2|h3|ul|ol|li|blockquote|table|tr|pre|hr)/.test(line) ||
+        /<\/?(ul|ol|table|pre|blockquote|hr)/.test(line) ||
+        line.includes("\u0000CODE");
+      if (line.trim() === "") { flush(); return; }
+      if (isBlock) { flush(); out += line; }
+      else para.push(inline(line));
+    });
+    flush();
+
+    out = out.replace(/\u0000CODE(\d+)\u0000/g, (m, i) => codeBlocks[i]);
+    return out;
+  }
+
+  function inline(s) {
+    return s
+      .replace(/\*\*\*(.+?)\*\*\*/g, "<strong><em>$1</em></strong>")
+      .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+      .replace(/(^|[^*])\*([^*\n]+)\*/g, "$1<em>$2</em>")
+      .replace(/__(.+?)__/g, "<strong>$1</strong>")
+      .replace(/`([^`]+)`/g, "<code>$1</code>")
+      .replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+  }
+
+  // ---------- RENDERING ----------
+  function hideWelcome() { if (welcome && welcome.parentNode) welcome.style.display = "none"; }
+
+  function addMessage(role, content, opts = {}) {
+    hideWelcome();
+    const wrap = document.createElement("div");
+    wrap.className = `msg ${role === "user" ? "user" : "ai"}`;
+
+    const avatar = document.createElement("div");
+    avatar.className = "avatar";
+    if (role === "user") {
+      const ini = currentUser ? getInitials(currentUser.name, currentUser.email) : "?";
+      avatar.textContent = ini;
+      avatar.style.background = colorFromString((currentUser && currentUser.email) || "user");
+    } else {
+      const img = document.createElement("img");
+      img.src = AI_AVATAR;
+      img.alt = "Nova AI";
+      avatar.appendChild(img);
+    }
+
+    const bubble = document.createElement("div");
+    bubble.className = "bubble";
+
+    if (role === "user") {
+      bubble.textContent = content;
+    } else {
+      if (opts.typing) {
+        bubble.innerHTML = '<span class="typing"><i></i><i></i><i></i></span>';
+      } else {
+        bubble.innerHTML = renderMarkdown(content);
+        attachCopyButtons(bubble);
+      }
+    }
+
+    wrap.appendChild(avatar);
+    wrap.appendChild(bubble);
+    chatInner.appendChild(wrap);
+    scrollToBottom();
+    return bubble;
+  }
+
+  function attachCopyButtons(scope) {
+    scope.querySelectorAll(".copy-code").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const pre = btn.closest("pre");
+        const code = pre.querySelector("code");
+        navigator.clipboard.writeText(code.innerText).then(() => {
+          btn.textContent = "✓";
+          setTimeout(() => (btn.textContent = "Copy"), 1200);
+        });
+      });
+    });
+  }
+
+  function scrollToBottom() {
+    requestAnimationFrame(() => { chat.scrollTop = chat.scrollHeight; });
+    if (scrollDown) scrollDown.classList.remove("show");
+  }
+
+  // ---------- STORAGE ----------
+  function saveHistory() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(messages)); } catch (e) {} }
+  function loadHistory() {
+    try { const raw = localStorage.getItem(STORAGE_KEY); if (raw) messages = JSON.parse(raw) || []; }
+    catch (e) { messages = []; }
+  }
+  function saveSettings() {
+    try {
+      localStorage.setItem(SETTINGS_KEY, JSON.stringify({
+        theme: document.documentElement.getAttribute("data-theme"),
+        system: sysPrompt.value,
+      }));
+    } catch (e) {}
+  }
+  function loadSettings() {
+    try {
+      const s = JSON.parse(localStorage.getItem(SETTINGS_KEY) || "{}");
+      if (s.theme) applyTheme(s.theme);
+      if (s.system) sysPrompt.value = s.system;
+    } catch (e) {}
+  }
+
+  function renderHistory() {
+    chatInner.querySelectorAll(".msg").forEach((n) => n.remove());
+    if (!messages.length) { if (welcome) welcome.style.display = ""; return; }
+    hideWelcome();
+    messages.forEach((m) => addMessage(m.role === "assistant" ? "ai" : m.role, m.content));
+    scrollToBottom();
+  }
+
+  // ---------- THEME ----------
+  function applyTheme(theme) {
+    document.documentElement.setAttribute("data-theme", theme);
+    const light = theme === "light";
+    themeLabel.textContent = light ? "Mode Gelap" : "Mode Terang";
+    themeToggle.firstChild.textContent = light ? "☀️ " : "🌙 ";
+  }
+  function toggleTheme() {
+    const cur = document.documentElement.getAttribute("data-theme");
+    applyTheme(cur === "light" ? "dark" : "light");
+    saveSettings();
+  }
+
+  // ---------- LOGIN ----------
+  function showLogin() {
+    loginScreen.style.display = "flex";
+    app.style.display = "none";
+    stepGoogle.style.display = "";
+    stepForm.style.display = "none";
+    gName.value = "";
+    gEmail.value = "";
+  }
+
+  function showApp(user) {
+    currentUser = user;
+    loginScreen.style.display = "none";
+    app.style.display = "";
+
+    const ini = getInitials(user.name, user.email);
+    sideAvatar.textContent = ini;
+    sideAvatar.style.background = colorFromString(user.email || user.name || "user");
+    sideName.textContent = user.name || "Pengguna";
+    sideEmail.textContent = user.email || "";
+    if (welcomeName) welcomeName.textContent = (user.name || "Sahabat").split(/\s+/)[0];
+
+    renderHistory();
+    input.focus();
+  }
+
+  function doLogin() {
+    const name = gName.value.trim();
+    const email = gEmail.value.trim();
+    if (!name) { toast("Masukkan nama Anda."); gName.focus(); return; }
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { toast("Masukkan email yang valid."); gEmail.focus(); return; }
+    const user = { name, email };
+    try { localStorage.setItem(USER_KEY, JSON.stringify(user)); } catch (e) {}
+    showApp(user);
+    toast(`Selamat datang, ${name.split(/\s+/)[0]}! 👋`, 2500);
+  }
+
+  function logout() {
+    if (!confirm("Keluar dari akun ini?")) return;
+    try { localStorage.removeItem(USER_KEY); } catch (e) {}
+    currentUser = null;
+    showLogin();
+  }
+
+  googleSignIn.addEventListener("click", () => {
+    stepGoogle.style.display = "none";
+    stepForm.style.display = "";
+    gName.focus();
+  });
+  backBtn.addEventListener("click", () => {
+    stepForm.style.display = "none";
+    stepGoogle.style.display = "";
+  });
+  nextBtn.addEventListener("click", doLogin);
+  gEmail.addEventListener("keydown", (e) => { if (e.key === "Enter") doLogin(); });
+  gName.addEventListener("keydown", (e) => { if (e.key === "Enter") gEmail.focus(); });
+  logoutBtn.addEventListener("click", logout);
+
+  // ============================================================
+  //  MESIN AI — failover otomatis antar penyedia gratis
+  // ============================================================
+
+  function abortErr() {
+    try { return new DOMException("Aborted", "AbortError"); }
+    catch (e) { const e2 = new Error("Aborted"); e2.name = "AbortError"; return e2; }
+  }
+
+  // Baca aliran SSE (OpenAI-compatible). acc.text menampung teks penuh.
+  async function readSSE(res, onDelta, acc) {
+    const reader = res.body.getReader();
+    const dec = new TextDecoder();
+    let buf = "";
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buf += dec.decode(value, { stream: true });
+      const lines = buf.split("\n");
+      buf = lines.pop();
+      for (const line of lines) {
+        const s = line.trim();
+        if (!s.startsWith("data:")) continue;
+        const d = s.slice(5).trim();
+        if (!d || d === "[DONE]") continue;
+        try {
+          const j = JSON.parse(d);
+          const delta = j.choices?.[0]?.delta?.content || j.choices?.[0]?.text || "";
+          if (delta) { acc.text += delta; onDelta(acc.text); }
+        } catch (e) {}
+      }
+    }
+  }
+
+  // ---- Penyedia 1: LLM7.io (streaming) ----
+  async function llm7Chat(msgs, onDelta, signal) {
+    const res = await fetch(LLM7_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ model: LLM7_MODEL, stream: true, messages: msgs }),
+      signal,
+    });
+    if (res.status === 429) throw new Error("rate-limited");
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const acc = { text: "" };
+    try { await readSSE(res, onDelta, acc); }
+    catch (e) { if (acc.text.trim()) return acc.text; throw e; }
+    if (!acc.text.trim()) throw new Error("empty");
+    return acc.text;
+  }
+
+  // ---- Penyedia 2: OVHcloud AI Endpoints (anonim, OpenAI-compatible) ----
+  async function ovhChat(msgs, onDelta, signal) {
+    const res = await fetch(OVH_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ model: OVH_MODEL, messages: msgs, max_tokens: 1200, temperature: 0.7 }),
+      signal,
+    });
+    if (res.status === 429) throw new Error("rate-limited");
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const j = await res.json();
+    const text = (j.choices && j.choices[0] && j.choices[0].message && j.choices[0].message.content) || "";
+    if (!text.trim()) throw new Error("empty");
+    onDelta(text);
+    return text;
+  }
+
+  // ---- Penyedia 3: AI Horde (async, andal) ----
+  function buildHordePrompt(msgs) {
+    const sys = msgs.find((m) => m.role === "system");
+    let p = "### Instruction: " + (sys ? sys.content : "You are a helpful assistant.") + "\n\n";
+    msgs.filter((m) => m.role !== "system").slice(-8).forEach((m) => {
+      p += (m.role === "user" ? "### User: " : "### Assistant: ") + m.content + "\n";
+    });
+    p += "### Assistant:";
+    return p;
+  }
+  async function hordeChat(msgs, onDelta, signal) {
+    toast("Server cepat sedang penuh — beralih ke AI Horde (perlu beberapa detik)…", 6000);
+    setStatus("Menunggu AI Horde…", "busy");
+    const start = await fetch(HORDE_ASYNC, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "apikey": HORDE_KEY, "Client-Agent": HORDE_AGENT },
+      body: JSON.stringify({
+        prompt: buildHordePrompt(msgs),
+        params: {
+          max_length: 512, max_context_length: 4096,
+          temperature: 0.7, top_p: 0.95,
+          stop_sequence: ["### User:", "### Instruction:"],
+        },
+        models: HORDE_MODELS,
+      }),
+      signal,
+    });
+    if (!start.ok) throw new Error("HTTP " + start.status);
+    const job = await start.json();
+    if (!job || !job.id) throw new Error("no-job");
+    for (let i = 0; i < 45; i++) {
+      await sleep(3000);
+      if (signal.aborted) throw abortErr();
+      const r = await fetch(HORDE_STATUS + job.id, { headers: { "Client-Agent": HORDE_AGENT }, signal });
+      if (!r.ok) continue;
+      const s = await r.json();
+      if (s.done) {
+        const text = ((s.generations && s.generations[0] && s.generations[0].text) || "").trim();
+        if (!text) throw new Error("empty");
+        onDelta(text);
+        return text;
+      }
+    }
+    throw new Error("timeout");
+  }
+
+  // ---- Daftar penyedia + urutan prioritas ----
+  const PROVIDERS = [
+    { id: "llm7",  label: "LLM7",      run: (m, d, s) => llm7Chat(m, d, s),  timeout: 16000 },
+    { id: "ovh",   label: "OVHcloud",  run: (m, d, s) => ovhChat(m, d, s),   timeout: 20000 },
+    { id: "horde", label: "AI Horde",  run: (m, d, s) => hordeChat(m, d, s), timeout: 150000 },
+  ];
+
+  function orderedProviders() {
+    const fast = PROVIDERS.filter((p) => p.id !== "horde");
+    const horde = PROVIDERS.find((p) => p.id === "horde");
+    if (preferredProvider) {
+      const idx = fast.findIndex((p) => p.id === preferredProvider);
+      if (idx > 0) { const [p] = fast.splice(idx, 1); fast.unshift(p); }
+    }
+    return fast.concat([horde]);
+  }
+
+  async function runProvider(p, msgs, onDelta, outerSignal) {
+    const ctrl = new AbortController();
+    const onAbort = () => ctrl.abort();
+    if (outerSignal) {
+      if (outerSignal.aborted) ctrl.abort();
+      else outerSignal.addEventListener("abort", onAbort, { once: true });
+    }
+    const timer = setTimeout(() => ctrl.abort(), p.timeout);
+    try {
+      return await p.run(msgs, onDelta, ctrl.signal);
+    } finally {
+      clearTimeout(timer);
+      if (outerSignal) outerSignal.removeEventListener("abort", onAbort);
+    }
+  }
+
+  function setStatus(text, cls) {
+    if (aiStatus) {
+      aiStatus.textContent = text;
+      aiStatus.className = "ai-status" + (cls ? " " + cls : "");
+    }
+  }
+
+  async function generateAI(msgs, onDelta, outerSignal, onStatus) {
+    const list = orderedProviders();
+    let lastErr = null;
+    for (const p of list) {
+      if (outerSignal && outerSignal.aborted) throw abortErr();
+      if (onStatus) onStatus(p.label);
+      try {
+        const text = await runProvider(p, msgs, onDelta, outerSignal);
+        preferredProvider = p.id;
+        try { localStorage.setItem(PREF_KEY, p.id); } catch (e) {}
+        return { text, provider: p.label };
+      } catch (e) {
+        if (outerSignal && outerSignal.aborted) throw abortErr();
+        lastErr = e;
+      }
+    }
+    throw lastErr || new Error("semua server gagal");
+  }
+
+  // ---------- SEND ----------
+  async function sendMessage(text) {
+    text = (text || "").trim();
+    if (!text || isGenerating) return;
+
+    input.value = "";
+    autoResize();
+
+    messages.push({ role: "user", content: text });
+    addMessage("user", text);
+    saveHistory();
+
+    const aiBubble = addMessage("ai", "", { typing: true });
+    setGenerating(true);
+
+    const payload = [
+      { role: "system", content: sysPrompt.value.trim() || "You are a helpful assistant." },
+      ...messages,
+    ];
+
+    controller = new AbortController();
+    let started = false;
+    const onDelta = (full) => {
+      if (!started) { started = true; aiBubble.innerHTML = ""; }
+      aiBubble.innerHTML = renderMarkdown(full) + '<span class="cursor-blink"></span>';
+      scrollToBottom();
+    };
+    const onStatus = (label) => {
+      if (!started) {
+        topSub.textContent = "Menghubungkan ke " + label + "…";
+        setStatus("Menghubungkan ke " + label + "…", "busy");
+      }
+    };
+
+    try {
+      const { text: full, provider } = await generateAI(payload, onDelta, controller.signal, onStatus);
+
+      aiBubble.innerHTML = ren
+/*============================================================
+   Nova AI — Web AI Chat
+   Desain modern, dark/light, responsif
+   ============================================================ */
+
+:root {
+  --bg: #0b1020;
+  --bg-soft: #11162b;
+  --panel: #151b33;
+  --panel-2: #1b2342;
+  --border: #262f52;
+  --text: #eef1ff;
+  --text-dim: #9aa3c7;
+  --accent: #6c8cff;
+  --accent-2: #a855f7;
+  --accent-grad: linear-gradient(135deg, #6c8cff 0%, #a855f7 100%);
+  --user-bubble: linear-gradient(135deg, #4f6bff 0%, #8b5cf6 100%);
+  --ai-bubble: #1b2342;
+  --danger: #ff5d6c;
+  --ok: #22c55e;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  --radius: 16px;
+  --mono: "SFMono-Regular", ui-monospace, Menlo, Consolas, monospace;
+}
+
+[data-theme="light"] {
+  --bg: #f4f6fb;
+  --bg-soft: #ffffff;
+  --panel: #ffffff;
+  --panel-2: #f0f3fb;
+  --border: #e2e7f5;
+  --text: #131a33;
+  --text-dim: #5b6588;
+  --ai-bubble: #eef1fb;
+  --shadow: 0 10px 30px rgba(30, 45, 90, 0.12);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { height: 100%; }
+
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(108, 140, 255, 0.22), transparent 60%),
+    radial-gradient(1000px 500px at 100% 0%, rgba(168, 85, 247, 0.20), transparent 55%),
+    radial-gradient(900px 900px at 50% 120%, rgba(168, 85, 247, 0.16), transparent 60%),
+    radial-gradient(700px 700px at 0% 100%, rgba(108, 140, 255, 0.14), transparent 60%),
+    var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  transition: background .3s ease, color .3s ease;
+}
+
+.app {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ---------------- Sidebar ---------------- */
+.sidebar {
+  background: var(--panel);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 18px;
+  gap: 14px;
+  transition: transform .25s ease;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 4px 12px;
+}
+
+.brand .logo-img {
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 0 6px 18px rgba(108, 140, 255, 0.45);
+  border: 1px solid var(--border);
+}
+
+.brand h1 { font-size: 18px; font-weight: 800; letter-spacing: 1.2px; }
+.brand span { font-size: 11px; color: var(--text-dim); }
+
+.new-chat {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  background: var(--accent-grad);
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: transform .15s ease, filter .15s ease;
+}
+.new-chat:hover { transform: translateY(-1px); filter: brightness(1.08); }
+
+.side-section { display: flex; flex-direction: column; gap: 8px; }
+.side-label {
+  font-size: 11px; text-transform: uppercase; letter-spacing: .12em;
+  color: var(--text-dim); font-weight: 700; padding: 4px 4px;
+}
+
+.field label { display: block; font-size: 12px; color: var(--text-dim); margin-bottom: 6px; }
+.field select, .field textarea, .field input {
+  width: 100%;
+  background: var(--panel-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 13px;
+  font-family: inherit;
+  resize: vertical;
+}
+.field textarea { min-height: 74px; line-height: 1.4; }
+.field select:focus, .field textarea:focus, .field input:focus {
+  outline: none; border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(108, 140, 255, 0.18);
+}
+
+/* Status mesin AI (multi-server) */
+.ai-status {
+  margin-top: 8px;
+  font-size: 11.5px;
+  color: var(--text-dim);
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 9px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--panel-2);
+  transition: color .2s, border-color .2s;
+}
+.ai-status::before {
+  content: ""; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--text-dim); flex: 0 0 auto;
+}
+.ai-status.busy { color: var(--accent); border-color: rgba(108,140,255,.5); }
+.ai-status.busy::before { background: var(--accent); animation: pulseDot 1s infinite; }
+.ai-status.ok { color: #34d399; border-color: rgba(52,211,153,.45); }
+.ai-status.ok::before { background: #34d399; }
+.ai-status.err { color: #f87171; border-color: rgba(248,113,113,.5); }
+.ai-status.err::before { background: #f87171; }
+@keyframes pulseDot { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
+
+/* Tag penyedia yang menjawab */
+.provider-tag {
+  font-size: 10.5px; color: var(--text-dim);
+  border: 1px dashed var(--border); border-radius: 8px;
+  padding: 3px 9px; align-self: center;
+}
+
+.side-spacer { flex: 1; }
+
+.side-footer {
+  display: flex; flex-direction: column; gap: 8px;
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+}
+.ghost-btn {
+  display: flex; align-items: center; gap: 8px;
+  background: transparent;
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 9px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+.ghost-btn:hover { color: var(--text); border-color: var(--accent); background: var(--panel-2); }
+.status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 8px var(--ok); }
+
+/* ---------------- Main ---------------- */
+.main { display: flex; flex-direction: column; height: 100vh; min-width: 0; position: relative; }
+
+.topbar {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--panel) 70%, transparent);
+  backdrop-filter: blur(10px);
+}
+.menu-btn { display: none; }
+.topbar .title { font-weight: 800; font-size: 15px; letter-spacing: 1px; }
+.topbar .subtitle { font-size: 12px; color: var(--text-dim); }
+.topbar .grow { flex: 1; }
+
+.icon-btn {
+  width: 40px; height: 40px;
+  display: grid; place-items: center;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--panel-2);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 17px;
+  transition: all .15s ease;
+}
+.icon-btn:hover { border-color: var(--accent); transform: translateY(-1px); }
+
+/* ---------------- Chat area ---------------- */
+.chat {
+  flex: 1;
+  overflow-y: auto;
+  padding: 26px 22px 12px;
+  scroll-behavior: smooth;
+}
+.chat-inner { max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
+
+.msg { display: flex; gap: 12px; align-items: flex-start; animation: fadeUp .3s ease; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+.msg .avatar {
+  width: 36px; height: 36px; border-radius: 10px; flex: 0 0 36px;
+  display: grid; place-items: center; font-size: 17px;
+}
+.msg.user { flex-direction: row-reverse; }
+.msg.user .avatar { background: var(--user-bubble); color: #fff; }
+.msg.ai .avatar { background: var(--accent-grad); color: #fff; }
+
+.bubble {
+  max-width: 78%;
+  padding: 13px 16px;
+  border-radius: 14px;
+  line-height: 1.65;
+  font-size: 14.5px;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+}
+.msg.user .bubble { background: var(--user-bubble); color: #fff; border-bottom-right-radius: 4px; }
+.msg.ai .bubble { background: var(--ai-bubble); border: 1px solid var(--border); border-bottom-left-radius: 4px; }
+
+.bubble p { margin: 0 0 10px; }
+.bubble p:last-child { margin-bottom: 0; }
+.bubble ul, .bubble ol { margin: 0 0 10px 20px; }
+.bubble li { margin: 3px 0; }
+.bubble h1, .bubble h2, .bubble h3 { margin: 12px 0 8px; line-height: 1.3; }
+.bubble h1 { font-size: 20px; } .bubble h2 { font-size: 17px; } .bubble h3 { font-size: 15px; }
+.bubble a { color: var(--accent); }
+.bubble code {
+  font-family: var(--mono); font-size: 12.5px;
+  background: rgba(127, 140, 190, 0.22);
+  padding: 2px 6px; border-radius: 6px;
+}
+.bubble pre {
+  background: #0d1226; color: #e7ecff;
+  border: 1px solid var(--border);
+  border-radius: 10px; padding: 12px 14px;
+  overflow-x: auto; margin: 8px 0;
+  position: relative;
+}
+[data-theme="light"] .bubble pre { background: #0f1530; }
+.bubble pre code { background: none; padding: 0; color: inherit; }
+.bubble blockquote {
+  border-left: 3px solid var(--accent);
+  padding-left: 12px; margin: 8px 0; color: var(--text-dim);
+}
+.bubble table { border-collapse: collapse; width: 100%; margin: 8px 0; font-size: 13px; }
+.bubble th, .bubble td { border: 1px solid var(--border); padding: 6px 10px; text-align: left; }
+.bubble th { background: var(--panel-2); }
+
+.copy-code {
+  position: absolute; top: 8px; right: 8px;
+  background: rgba(255,255,255,.12); color: #fff;
+  border: none; border-radius: 6px; padding: 3px 8px;
+  font-size: 11px; cursor: pointer;
+}
+.copy-code:hover { background: rgba(255,255,255,.25); }
+
+.msg-actions { display: flex; gap: 6px; margin-top: 8px; opacity: 0; transition: opacity .2s; }
+.msg.ai:hover .msg-actions { opacity: 1; }
+.msg-actions button {
+  background: transparent; border: 1px solid var(--border);
+  color: var(--text-dim); border-radius: 8px; padding: 3px 9px;
+  font-size: 11px; cursor: pointer;
+}
+.msg-actions button:hover { color: var(--text); border-color: var(--accent); }
+
+.typing { display: inline-flex; gap: 5px; align-items: center; height: 20px; }
+.typing i {
+  width: 7px; height: 7px; border-radius: 50%; background: var(--text-dim);
+  animation: blink 1.2s infinite ease-in-out;
+}
+.typing i:nth-child(2) { animation-delay: .2s; }
+.typing i:nth-child(3) { animation-delay: .4s; }
+@keyframes blink { 0%, 80%, 100% { opacity: .3; transform: translateY(0); } 40% { opacity: 1; transform: translateY(-4px); } }
+
+.cursor-blink { display: inline-block; width: 7px; height: 15px; background: var(--accent); margin-left: 2px; vertical-align: -2px; animation: blink2 .9s steps(1) infinite; }
+@keyframes blink2 { 50% { opacity: 0; } }
+
+/* ---------------- Welcome ---------------- */
+.welcome { text-align: center; padding: 40px 10px; max-width: 720px; margin: 0 auto; }
+.welcome .big-logo {
+  width: 40px; height: 40px; border-radius: 50%; margin: 0 auto 18px;
+  object-fit: cover; display: block;
+  box-shadow: 0 6px 18px rgba(108, 140, 255, 0.45);
+  border: 2px solid var(--border);
+}
+.welcome h2 { font-size: 26px; margin-bottom: 8px; }
+.welcome p { color: var(--text-dim); margin-bottom: 26px; font-size: 14px; }
+.suggestions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.suggestion {
+  text-align: left; padding: 14px 16px; border-radius: 14px;
+  border: 1px solid var(--border); background: var(--panel);
+  cursor: pointer; transition: all .15s ease;
+}
+.suggestion:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow); }
+.suggestion b { display: block; font-size: 13.5px; margin-bottom: 3px; }
+.suggestion span { font-size: 12px; color: var(--text-dim); }
+
+/* ---------------- Composer ---------------- */
+.composer-wrap { padding: 12px 22px 20px; }
+.composer {
+  max-width: 860px; margin: 0 auto;
+  display: flex; align-items: flex-end; gap: 10px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 10px 10px 10px 16px;
+  box-shadow: var(--shadow);
+  transition: border-color .15s;
+}
+.composer:focus-within { border-color: var(--accent); }
+.composer textarea {
+  flex: 1; background: transparent; border: none; color: var(--text);
+  font-family: inherit; font-size: 14.5px; line-height: 1.5;
+  resize: none; max-height: 180px; padding: 8px 0;
+}
+.composer textarea:focus { outline: none; }
+.send-btn {
+  width: 44px; height: 44px; flex: 0 0 44px; border: none; border-radius: 12px;
+  background: var(--accent-grad); color: #fff; font-size: 18px; cursor: pointer;
+  display: grid; place-items: center; transition: transform .15s, filter .15s;
+}
+.send-btn:hover { transform: translateY(-1px); filter: brightness(1.1); }
+.send-btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+.hint { max-width: 860px; margin: 8px auto 0; text-align: center; font-size: 11px; color: var(--text-dim); }
+
+/* Sembunyikan badge/watermark platform */
+#ninja-badge, .ninja-badge { display: none !important; visibility: hidden !important; opacity: 0 !important; }
+#ninja-daytona-banner, .ninja-daytona-banner { display: none !important; visibility: hidden !important; }
+body { padding-top: 0 !important; }
+
+/* ---------------- Toast ---------------- */
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px);
+  background: var(--danger); color: #fff; padding: 12px 18px; border-radius: 12px;
+  font-size: 13px; box-shadow: var(--shadow); opacity: 0; pointer-events: none;
+  transition: all .3s ease; z-index: 100; max-width: 90vw;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ---------------- Scrollbar ---------------- */
+.chat::-webkit-scrollbar { width: 10px; }
+.chat::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+.chat::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+/* ---------------- Login Screen (Google) ---------------- */
+.login-screen {
+  position: fixed; inset: 0; z-index: 200;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 22px;
+  background:
+    radial-gradient(900px 500px at 20% 0%, rgba(108, 140, 255, 0.20), transparent 60%),
+    radial-gradient(800px 500px at 100% 100%, rgba(168, 85, 247, 0.18), transparent 55%),
+    var(--bg);
+  padding: 20px;
+}
+.login-card {
+  width: 100%; max-width: 400px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 34px 30px;
+  box-shadow: var(--shadow);
+  animation: fadeUp .4s ease;
+}
+.login-brand { text-align: center; margin-bottom: 26px; }
+.login-logo {
+  width: 40px; height: 40px; border-radius: 50%; object-fit: cover;
+  margin: 0 auto 14px; display: block;
+  box-shadow: 0 6px 16px rgba(108, 140, 255, 0.45);
+  border: 2px solid var(--border);
+}
+.login-brand h1 { font-size: 22px; font-weight: 800; letter-spacing: 1.6px; margin-bottom: 6px; }
+.login-brand p { font-size: 13px; color: var(--text-dim); }
+
+.google-btn {
+  width: 100%; display: flex; align-items: center; justify-content: center; gap: 12px;
+  background: #fff; color: #1f1f1f;
+  border: 1px solid #dadce0; border-radius: 12px;
+  padding: 13px 16px; font-size: 15px; font-weight: 600;
+  cursor: pointer; transition: all .18s ease;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35), 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+.google-btn:hover { box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45), 0 3px 8px rgba(0, 0, 0, 0.3); transform: translateY(-2px); }
+.google-btn:active { transform: translateY(0); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); }
+.login-terms { font-size: 11px; color: var(--text-dim); text-align: center; margin-top: 16px; line-height: 1.5; }
+
+.google-head { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: var(--text-dim); margin-bottom: 18px; }
+.google-title { font-size: 22px; margin-bottom: 6px; }
+.google-sub { font-size: 13px; color: var(--text-dim); margin-bottom: 22px; }
+
+.gfield { position: relative; margin-bottom: 16px; }
+.gfield input {
+  width: 100%; background: var(--panel-2); color: var(--text);
+  border: 1px solid var(--border); border-radius: 10px;
+  padding: 16px 14px 8px; font-size: 14px; font-family: inherit;
+}
+.gfield input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(108,140,255,.18); }
+.gfield label {
+  position: absolute; left: 14px; top: 14px; color: var(--text-dim);
+  font-size: 14px; pointer-events: none; transition: all .15s ease;
+}
+.gfield input:focus + label,
+.gfield input:not(:placeholder-shown) + label {
+  top: 5px; font-size: 10.5px; color: var(--accent);
+}
+.grow-row { display: flex; align-items: center; justify-content: space-between; margin-top: 22px; }
+.gtext-btn { background: none; border: none; color: var(--accent); font-size: 14px; font-weight: 600; cursor: pointer; padding: 8px 4px; }
+.gprimary {
+  background: var(--accent-grad); color: #fff; border: none;
+  border-radius: 10px; padding: 11px 22px; font-size: 14px; font-weight: 600;
+  cursor: pointer; transition: transform .15s, filter .15s;
+}
+.gprimary:hover { transform: translateY(-1px); filter: brightness(1.1); }
+.login-foot { font-size: 11px; color: var(--text-dim); }
+
+/* ---------------- Account box ---------------- */
+.account-box {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 8px 10px;
+}
+.user-avatar {
+  width: 38px; height: 38px; flex: 0 0 38px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  color: #fff; font-weight: 700; font-size: 15px;
+  letter-spacing: .5px;
+  box-shadow: 0 3px 10px rgba(0,0,0,.25);
+}
+.account-info { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+.account-info b { font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.account-info span { font-size: 11px; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.logout-btn {
+  background: transparent; border: none; color: var(--text-dim);
+  font-size: 16px; cursor: pointer; padding: 4px 6px; border-radius: 8px;
+  transition: all .15s ease;
+}
+.logout-btn:hover { color: var(--danger); background: rgba(255,93,108,.12); }
+
+/* ---------------- Scroll-to-bottom button ---------------- */
+.scroll-down {
+  position: absolute; bottom: 92px; right: 26px; z-index: 20;
+  width: 42px; height: 42px; border-radius: 50%;
+  background: var(--panel); border: 1px solid var(--border); color: var(--text);
+  font-size: 18px; cursor: pointer; display: none; place-items: center;
+  box-shadow: var(--shadow); transition: transform .15s;
+}
+.scroll-down.show { display: grid; }
+.scroll-down:hover { transform: translateY(-2px); border-color: var(--accent); }
+.scroll-down .badge-dot {
+  position: absolute; top: -3px; right: -3px; width: 10px; height: 10px;
+  background: var(--accent); border-radius: 50%; border: 2px solid var(--panel);
+}
+
+/* ---------------- Responsive ---------------- */
+.overlay { display: none; }
+@media (max-width: 860px) {
+  .app { grid-template-columns: 1fr; }
+  .sidebar {
+    position: fixed; z-index: 50; width: 290px; height: 100vh;
+    transform: translateX(-105%);
+  }
+  .sidebar.open { transform: translateX(0); }
+  .menu-btn { display: grid; }
+  .overlay.show { display: block; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 40; }
+  .suggestions { grid-template-columns: 1fr; }
+  .bubble { max-width: 88%; }
+}
+ba(0,0,0,.5); z-index: 40; }
+  .suggestions { grid-template-columns: 1fr; }
+  .bubble { max-width: 88%; }
+}
